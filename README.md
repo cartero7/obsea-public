@@ -1,63 +1,91 @@
-# OBSEA3 - API & ROS2 Usage Examples
+# OBSEA3 Public Documentation
 
-> **Public documentation repository** for OBSEA3 submarine power & instrument control system.
+This folder contains public-facing documentation in English. It is designed to be synced into a public repository (no private code required).
 
-🚀 **Quick Start**: Browse the examples below  
-📧 **Contact**: For full source code access, contact project maintainers
+## System at a glance
+OBSEA3 — Submarine Power & Instrument Control  
+ROS2-based system with FastAPI backend and React web frontend.
 
----
+```
+┌────────────────────────────────────────────────────────────────┐
+│              OBSEA3 SYSTEM ARCHITECTURE                        │
+└────────────────────────────────────────────────────────────────┘
 
-## 📚 Documentation
+┌──────────────────────────────────────────────────────────────┐
+│  Web Interface (React + Vite)                                │
+│  • Dashboard & Real-time Telemetry                           │
+│  • Port Control (12V/48V switching)                          │
+│  • User Management & Config Editor                           │
+└────────────────────────┬─────────────────────────────────────┘
+                         │ HTTP/REST + WebSocket
+                         ↓
+┌──────────────────────────────────────────────────────────────┐
+│  API Gateway (FastAPI)                                       │
+│  • JWT Authentication & Port Leases                          │
+│  • Audit Logging & Safety Checks                             │
+│  • ROS2 Bridge (Topics ↔ REST/WS)                            │
+└────────────────────────┬─────────────────────────────────────┘
+                         │ ROS2 Services & Topics
+                         ↓
+┌──────────────────────────────────────────────────────────────┐
+│  Hardware Supervisor (ROS2 Jazzy)                            │
+│  • I2C Sensors (LTC2945, MCP23008, ADS1115)                  │
+│  • SNMP Network Monitoring                                   │
+│  • Safety Manager (Voltage/Current Limits)                   │
+│  • State Machine & Alarm System                              │
+└────────────────────────┬─────────────────────────────────────┘
+                         │ I2C Bus + GPIO + SNMP
+                         ↓
+┌──────────────────────────────────────────────────────────────┐
+│  Hardware Backplane (Custom PCB)                             │
+│  • Power Rails: 48V / 12V / 5V with monitoring               │
+└────────────────────────┬─────────────────────────────────────┘
+                         │
+            ┌────────────┴────────────┐
+            │                         │
+      ┌─────▼──────┐            ┌─────▼──────┐
+      │ Port 1-4   │    ...     │ Port 5-8   │
+      │ (12V/48V)  │            │ (12V/48V)  │
+      └─────┬──────┘            └─────┬──────┘
+            │                         │
+            └────────────┬────────────┘
+                         ↓
+                ┌─────────────────┐
+                │ Underwater Lab  │
+                │ • CTD Sensors   │
+                │ • IP Cameras    │
+                │ • Hydrophones   │
+                │ • Instruments   │
+                └─────────────────┘
 
-### 🌐 REST API Examples
-→ **[docs/API_EJEMPLOS.md](docs/API_EJEMPLOS.md)**
+┌──────────────────────────────────────────────────────────────┐
+│  Monitoring & Observability                                  │
+│  • Zabbix Bridge → Metrics Server                            │
+│  • SQLite Audit Logs (Actions + Alarms)                      │
+│  • Config Versioning (YAML Archives)                         │
+└──────────────────────────────────────────────────────────────┘
+```
 
-Complete REST API usage guide with real-world examples:
-- Authentication & JWT tokens
-- Port control (12V/48V switching)
-- Real-time telemetry & monitoring
-- System configuration
-- Lease management (exclusive port control)
-- Python & curl examples
+## Start here
+- [API.md](API.md) - REST API login, telemetry, leases, and safe port control.
+- [ROS2_CLI.md](ROS2_CLI.md) - Using the ROS2 CLI with JWTs or the system token.
+- [ROS2_CLI_examples.md](ROS2_CLI_examples.md) - Ready-to-run scripts for operator, maintenance, and one-shot flows.
+- [USAGE.md](USAGE.md) - Quick index (legacy entry point).
 
-### 🤖 ROS2 Integration Examples
-→ **[docs/ROS2_EJEMPLOS.md](docs/ROS2_EJEMPLOS.md)**
+## Notes
+- These docs are intentionally minimal and avoid private deployment details.
+- Internal and operational docs live in the private repository under `docs/`.
 
-ROS2 service integration guide with automation examples:
-- ROS2 service calls with JWT authentication
-- Direct hardware control from ROS2 nodes
-- Port control automation scripts
-- System token vs user authentication
-- Bash script examples for common tasks
+## Contact
+For questions or support: carola.artero@upc.edu
 
----
+## Credits & License
 
-## 🎯 System Overview
+**System Design & Development**:  
+🧑‍💻 **Carla Artero Delgado**  
+📍 Universitat Politècnica de Catalunya (UPC)  
+🌍 Catalunya  
+📧 carola.artero@upc.edu
 
-OBSEA3 controls submarine power rails (12V/48V) for underwater instruments via I2C sensors.
-
-**Architecture:**
-- **Backend**: ROS2 Jazzy + FastAPI gateway
-- **Hardware**: I2C sensors (LTC2945, MCP23008, ADS1115)
-- **Frontend**: React + Vite responsive web interface
-- **Security**: JWT authentication with role-based access control
-- **Safety**: Real-time monitoring with automatic protection limits
-
-**Key Features:**
-- 🔌 12V/48V power rail switching
-- 🔐 Multi-user authentication with port-level permissions
-- 📊 Real-time telemetry & alarm system
-- 🚨 Overcurrent/undervolt protection with auto-shutdown
-- 📱 Mobile-responsive web interface
-- 🔧 ROS2 integration for research workflows
-
----
-
-## 📜 License
-
-See [LICENSE](LICENSE) file.
-
-## 👤 Credits
-
-**Designed by**: Carla Artero Delgado (UPC) — Catalunya  
-**Project**: OBSEA Submarine Observatory
+**Project**: OBSEA3 Submarine Observatory Control System  
+**Technologies**: ROS2 Jazzy, FastAPI, React, Python, I2C, SNMP
