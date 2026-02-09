@@ -42,8 +42,6 @@ sudo bash -lc "
 # --- Release lease ---
 curl -s -X POST "$API_BASE/ports/$PORT/lease/release?lease_id=$LEASE" \
   -H "Authorization: Bearer $TOKEN" >/dev/null
-
-echo "Done: port $PORT set to $MODE and lease released."
 ```
 
 ## 2) Maintenance flow (system token)
