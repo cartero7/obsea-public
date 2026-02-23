@@ -18,7 +18,7 @@ ROS_DOMAIN_ID=1   # active ROS2 domain
 
 # --- Derive API endpoint ---
 API_PORT=$(awk -F= '/^export UVICORN_PORT=/{gsub(/"/,"",$2);print $2;exit}' /opt/obsea/bin/.venv)
-API_BASE="http://localhost:${API_PORT:-8100}"
+API_BASE="http://localhost:${API_PORT:-8101}"
 
 # --- Login and lease ---
 TOKEN=$(curl -s -X POST "$API_BASE/auth/login" \

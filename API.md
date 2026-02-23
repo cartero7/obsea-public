@@ -4,9 +4,9 @@ Public-facing, copy/paste-friendly guide for the OBSEA3 REST API. Prefer the API
 
 ## Quick setup
 ```bash
-# Resolve API port from install (fallback 8100)
+# Resolve API port from install (fallback 8101)
 API_PORT=$(awk -F= '/^export UVICORN_PORT=/{gsub(/"/,"",$2);print $2;exit}' /opt/obsea/bin/.venv 2>/dev/null)
-API_BASE="http://localhost:${API_PORT:-8100}"
+API_BASE="http://localhost:${API_PORT:-8101}"
 
 # Credentials (replace)
 USER="test"    # TODO
@@ -87,7 +87,7 @@ curl -s "$API_BASE/logs/system" | python3 -m json.tool
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
-API_BASE="${API_BASE:-http://localhost:${API_PORT:-8100}}"
+API_BASE="${API_BASE:-http://localhost:${API_PORT:-8101}}"
 PORT=1
 
 TOKEN=$(curl -s -X POST "$API_BASE/auth/login" \
@@ -115,7 +115,7 @@ curl -s "$API_BASE/ports/$PORT/telemetry" | python3 -m json.tool
 #!/usr/bin/env python3
 import time, requests, os
 
-API_BASE = os.getenv("API_BASE", "http://localhost:8100")
+API_BASE = os.getenv("API_BASE", "http://localhost:8101")
 USER = os.getenv("API_USER", "test")
 PASS = os.getenv("API_PASS", "test123")
 PORT = int(os.getenv("PORT", "1"))
@@ -140,7 +140,7 @@ for i in range(5):
 #!/usr/bin/env python3
 import requests, os
 
-API_BASE = os.getenv("API_BASE", "http://localhost:8100")
+API_BASE = os.getenv("API_BASE", "http://localhost:8101")
 USER = os.getenv("API_USER", "test")
 PASS = os.getenv("API_PASS", "test123")
 PORT = int(os.getenv("PORT", "1"))

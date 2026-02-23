@@ -28,7 +28,7 @@ source /opt/obsea/ros2_ws/install/setup.bash
 1) Set base variables and obtain a JWT (uses the API only to log in and get a lease):
 ```bash
 API_PORT=$(awk -F= '/^export UVICORN_PORT=/{gsub(/"/,"",$2);print $2;exit}' /opt/obsea/bin/.venv)
-API_BASE="http://localhost:${API_PORT:-8100}"
+API_BASE="http://localhost:${API_PORT:-8101}"
 USER="test"      # replace
 PASS="test123"   # replace
 PORT=1           # valid range: 1-8
