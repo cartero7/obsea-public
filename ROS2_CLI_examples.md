@@ -45,7 +45,7 @@ curl -s -X POST "$API_BASE/ports/$PORT/lease/release?lease_id=$LEASE" \
 ```
 
 ## 2) Maintenance flow (system token)
-Use offline or when the API is unreachable. Requires `OBSEA3_TOKEN` in `/opt/obsea/bin/secrets`.
+Use offline or when the API is unreachable. Requires `OBSEA3_TOKEN` in `/opt/obsea/bin/secrets.env`.
 
 ```bash
 #!/usr/bin/env bash
@@ -57,7 +57,7 @@ ROS_DOMAIN_ID=1
 
 sudo env PORT="$PORT" MODE="$MODE" ROS_DOMAIN_ID="$ROS_DOMAIN_ID" bash -lc '
   source /opt/obsea/bin/.venv 2>/dev/null   # may define ROS_DOMAIN_ID
-  source /opt/obsea/bin/secrets             # loads OBSEA3_TOKEN
+  source /opt/obsea/bin/secrets.env             # loads OBSEA3_TOKEN
   source /opt/ros/jazzy/setup.bash
   source /opt/obsea/ros2_ws/install/setup.bash
   export ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-1}
@@ -138,5 +138,5 @@ ros2 topic hz /obsea3/ports/p1/voltage
 - Always run on the control network.
 - Match `ROS_DOMAIN_ID` to the active nodes.
 - Operator flow requires `username` and `lease_id`; maintenance does not.
-- If you change `/opt/obsea/bin/secrets`, restart services so they load the new token.
+- If you change `/opt/obsea/bin/secrets.env`, restart services so they load the new token.
 - With `set -euo pipefail`, running `ros2 ...` before sourcing the environment will exit with `ros2: command not found` and drop the session. Source first (see section 4).
